@@ -15,8 +15,8 @@ client.send('join', null, (err, player) => {
   spanFace.textContent = player.face
 
   manager.on('move', (evt, data) => {
-    const x = Math.cos(data.angle.radian) * data.force
-    const y = Math.sin(data.angle.radian) * data.force
+    const x = Math.cos(data.angle.radian) * Math.min(data.force, 1.0)
+    const y = Math.sin(data.angle.radian) * Math.min(data.force, 1.0)
 
     client.send('move', { x, y })
   })
