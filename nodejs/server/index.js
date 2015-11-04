@@ -104,6 +104,8 @@ raptor.method('move', (req, cb) => {
 })
 
 raptor.method('bomb', (req, cb) => {
+  if (req.source.player.lastState.bomb) return
+
   sendToTv({
     method: 'bomb',
     params: {
@@ -112,7 +114,7 @@ raptor.method('bomb', (req, cb) => {
   })
 
   req.source.player.lastState.bomb = true
-  setTimeout(() => { req.source.player.lastState.bomb = false }, 250)
+  setTimeout(() => { req.source.player.lastState.bomb = false }, 2000)
 
   cb(null)
 })
