@@ -14,7 +14,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // MARK: - Instance Variables
     
-    let playerSpeed: CGFloat = 150.0
+    let playerSpeed: CGFloat = 300.0
     var player: SKSpriteNode?
     
     var lastTouch: CGPoint = CGPoint(x: 0, y: 0)
