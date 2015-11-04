@@ -56,6 +56,9 @@ class GameViewController: UIViewController {
         gameClient.callbacks.didUpdateMove = { [weak self] point in
             self!.scene.lastTouch = point
         }
+        
+        gameClient.callbacks.didDropBomb = { [weak self] in
+            self!.scene.shouldDropBomb = true
+        }
     }
-
 }

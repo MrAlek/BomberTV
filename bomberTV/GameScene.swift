@@ -18,6 +18,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var player: SKSpriteNode?
     
     var lastTouch: CGPoint = CGPoint(x: 0, y: 0)
+    var shouldDropBomb: Bool = false
     
     // MARK: - SKScene
     
@@ -26,7 +27,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.contactDelegate = self
         
         // Setup player
-        player = self.childNodeWithName("player") as? SKSpriteNode
+        player = childNodeWithName("player") as? SKSpriteNode
         
         let label = UILabel()
         
@@ -62,6 +63,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         player!.runAction(rotateAction)
         player!.physicsBody!.velocity = newVelocity
+        
+        
+        if shouldDropBomb {
+            dropBombAtPosition(player!.position)
+            shouldDropBomb = false
+        }
+    }
+    
+    func dropBombAtPosition(position: CGPoint) {
+        let bomb = SKSpriteNode.bomb(PlayerPointSize)
+        bomb.position = position
+        addChild(bomb)
     }
     
     // MARK: - SKPhysicsContactDelegate

@@ -18,6 +18,7 @@
 		9337F0BD1BE7EE83000352B3 /* JSONExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9337F0BC1BE7EE83000352B3 /* JSONExtensions.swift */; };
 		9337F0BF1BE7EEA5000352B3 /* JSONParsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9337F0BE1BE7EEA5000352B3 /* JSONParsable.swift */; };
 		9337F1041BEA5022000352B3 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9337F1031BEA5022000352B3 /* Utility.swift */; };
+		9337F1071BEA5C7D000352B3 /* Bomb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9337F1061BEA5C7D000352B3 /* Bomb.swift */; };
 		CA3D6911ED7D3F84D528E980 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0A48234E59C5C335063CC99 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -36,6 +37,7 @@
 		9337F0BC1BE7EE83000352B3 /* JSONExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONExtensions.swift; sourceTree = "<group>"; };
 		9337F0BE1BE7EEA5000352B3 /* JSONParsable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParsable.swift; sourceTree = "<group>"; };
 		9337F1031BEA5022000352B3 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		9337F1061BEA5C7D000352B3 /* Bomb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bomb.swift; sourceTree = "<group>"; };
 		A0A48234E59C5C335063CC99 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B285294FA0D76006E86F845E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -89,6 +91,7 @@
 				9337F1031BEA5022000352B3 /* Utility.swift */,
 				9337F0A61BE7DEAE000352B3 /* art.scnassets */,
 				9337F0A81BE7DEAE000352B3 /* GameViewController.swift */,
+				9337F1061BEA5C7D000352B3 /* Bomb.swift */,
 				9337F0B71BE7E850000352B3 /* GameScene.sks */,
 				9337F0B51BE7E75A000352B3 /* GameScene.swift */,
 				9337F0AA1BE7DEAE000352B3 /* Main.storyboard */,
@@ -234,6 +237,7 @@
 				9337F0B61BE7E75A000352B3 /* GameScene.swift in Sources */,
 				9337F0A91BE7DEAE000352B3 /* GameViewController.swift in Sources */,
 				9337F0A51BE7DEAE000352B3 /* AppDelegate.swift in Sources */,
+				9337F1071BEA5C7D000352B3 /* Bomb.swift in Sources */,
 				9337F0BD1BE7EE83000352B3 /* JSONExtensions.swift in Sources */,
 				9337F0BF1BE7EEA5000352B3 /* JSONParsable.swift in Sources */,
 			);

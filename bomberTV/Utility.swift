@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SpriteKit
 
 extension UIView {
     
@@ -30,7 +31,14 @@ extension String {
         
         return label.renderToImage()
     }
+}
+
+extension SKSpriteNode {
     
+    convenience init(text: String, size: CGFloat) {
+        self.init(texture: SKTexture(image: text.renderWithSystemFontSize(size)))
+        self.size = texture!.size()
+    }
 }
 
 public func + (lp: CGPoint, rp: CGPoint) -> CGPoint {
