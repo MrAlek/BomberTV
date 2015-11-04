@@ -14,19 +14,33 @@ let Padding: CGFloat = 128.0
 class RemotePlayer {
     var id: String
     var vec: CGVector
-    var node: SKSpriteNode
+    var face: String
+    var node: SKNode
+    var dead: Bool = false
     var shouldDropBomb: Bool = false
     
     init(id: String, face: String) {
+        self.face = face
         self.id = id
-        self.node = SKSpriteNode(text: face, size: PlayerPointSize)
-        self.node.physicsBody = SKPhysicsBody(circleOfRadius: self.node.size.width / 2.0)
-        self.node.physicsBody!.affectedByGravity = false
+        self.node = NewPlayerNode(id, text: face)
         self.vec = CGVector(dx: 0, dy: 0)
     }
 }
 
+func NewPlayerNode(id: String, text: String) -> SKNode {
+    let node = SKSpriteNode(text: text, size: PlayerPointSize)
+    node.physicsBody = SKPhysicsBody(circleOfRadius: node.size.width / 2.0)
+    node.physicsBody!.affectedByGravity = false
+    node.physicsBody!.contactTestBitMask = 2
+    node.physicsBody!.categoryBitMask = 1
+    node.userData = ["id": id]
+    node.name = "player"
+    return node
+}
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
+    
+    
     
     // MARK: - Instance Variables
     
@@ -74,19 +88,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func addPlayerWithId(id: String, face: String) {
-        let corner = Int(arc4random_uniform(4))
         let player = RemotePlayer(id: id, face: face)
+        placePlayerNode(player.node)
+        allThemPlayers[id] = player
+    }
+    
+    func placePlayerNode(node: SKNode) {
+        let corner = Int(arc4random_uniform(4))
         
         switch (corner) {
-        case 0: player.node.position = CGPoint(x: Padding, y: Padding)
-        case 1: player.node.position = CGPoint(x: size.width - Padding, y: Padding)
-        case 2: player.node.position = CGPoint(x: Padding, y: size.height - Padding)
-        case 3: player.node.position = CGPoint(x: size.width - Padding, y: size.height - Padding)
+        case 0: node.position = CGPoint(x: Padding, y: Padding)
+        case 1: node.position = CGPoint(x: size.width - Padding, y: Padding)
+        case 2: node.position = CGPoint(x: Padding, y: size.height - Padding)
+        case 3: node.position = CGPoint(x: size.width - Padding, y: size.height - Padding)
         default: fatalError()
         }
         
-        addChild(player.node)
-        allThemPlayers[id] = player
+        addChild(node)
     }
 
     func removePlayerWithId(id: String) {
@@ -108,10 +126,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func addExplosionAtPosition(position: CGPoint) {
-        var emitterNode = SKEmitterNode(fileNamed: "Explosion")!
+        let emitterNode = SKEmitterNode(fileNamed: "Explosion")!
         emitterNode.particlePosition = position
         addChild(emitterNode)
-        runAction(SKAction.waitForDuration(2), completion: { emitterNode.removeFromParent() })
+        
+        let node = SKNode()
+        node.physicsBody = SKPhysicsBody(circleOfRadius: 50)
+        node.position = position
+        node.physicsBody!.categoryBitMask = 2
+        node.physicsBody!.collisionBitMask = 0
+        node.name = "explosion"
+        addChild(node)
+        
+        runAction(SKAction.waitForDuration(2), completion: {
+            emitterNode.removeFromParent()
+            node.removeFromParent()
+        })
     }
     
     // MARK: - SKPhysicsContactDelegate
@@ -129,6 +159,34 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             firstBody = contact.bodyB
             secondBody = contact.bodyA
         }
+        
+        if firstBody.node?.name == "player" && secondBody.node?.name == "explosion" {
+            killPlayer(firstBody.node!)
+        }
+    }
+    
+    func killPlayer(node: SKNode) {
+        let playerId = node.userData!["id"] as! String
+        
+        let player = allThemPlayers[playerId]!
+        if player.dead { return }
+        
+        player.dead = true
+        node.physicsBody!.collisionBitMask = 0
+        GameClient.sharedClient.sendPlayerDied(playerId)
+        let fadeoutAction = SKAction.fadeOutWithDuration(1)
+        let scaleAction = SKAction.scaleBy(10.0, duration: 1)
+        let rotateAction = SKAction.rotateByAngle(CGFloat(M_PI)*5, duration: 1)
+        let group = SKAction.group([fadeoutAction, scaleAction, rotateAction])
+        let removeAction = SKAction.removeFromParent()
+        node.runAction(SKAction.sequence([group, removeAction]))
+    }
+    
+    func respawnPlayer(id: String) {
+        let player = allThemPlayers[id]!
+        player.node = NewPlayerNode(player.id, text: player.face)
+        placePlayerNode(player.node)
+        player.dead = false
     }
     
 }

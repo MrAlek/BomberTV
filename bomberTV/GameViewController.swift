@@ -31,7 +31,6 @@ extension SKNode {
 
 class GameViewController: UIViewController {
     
-    let gameClient = GameClient()
     
     lazy var scene: GameScene = {
         let scene = GameScene.unarchiveFromFile("GameScene") as! GameScene
@@ -53,21 +52,25 @@ class GameViewController: UIViewController {
         skView.ignoresSiblingOrder = true
         skView.presentScene(scene)
 
-        gameClient.callbacks.playerDidJoin = { [weak self] (id, face) in
+        GameClient.sharedClient.callbacks.playerDidJoin = { [weak self] (id, face) in
             self!.scene.addPlayerWithId(id, face: face)
         }
 
-        gameClient.callbacks.playerDidLeave = { [weak self] (id) in
+        GameClient.sharedClient.callbacks.playerDidLeave = { [weak self] (id) in
             self!.scene.removePlayerWithId(id)
         }
 
-        gameClient.callbacks.didUpdateMove = { [weak self] (id, point) in
+        GameClient.sharedClient.callbacks.didUpdateMove = { [weak self] (id, point) in
             let vec = CGVector(dx: point.x, dy: point.y)
             self?.scene.allThemPlayers[id]?.vec = vec
         }
         
-        gameClient.callbacks.didDropBomb = { [weak self] id in
+        GameClient.sharedClient.callbacks.didDropBomb = { [weak self] id in
             self?.scene.allThemPlayers[id]?.shouldDropBomb = true
+        }
+        
+        GameClient.sharedClient.callbacks.playerDidRespawn = { [weak self] id in
+            self?.scene.respawnPlayer(id)
         }
     }
 }

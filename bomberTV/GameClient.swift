@@ -49,11 +49,14 @@ class GameClient {
         var playerDidLeave: (String -> Void)? = nil
         var didUpdateMove: ((String, CGPoint) -> Void)? = nil
         var didDropBomb: (String -> Void)? = nil
+        var playerDidRespawn: (String -> Void)? = nil
     }
     var callbacks = Callbacks()
     
    let socket = WebSocket(url: NSURL(string: "ws://172.16.9.141:4940/")!)
 //    let socket = WebSocket(url: NSURL(string: "ws://127.0.0.1:4940/")!)
+    
+    static let sharedClient = GameClient()
     
     init() {
         socket.onConnect = { [unowned self] _ in
@@ -97,6 +100,9 @@ class GameClient {
         } else if message.method == "bomb" {
             let id = String(message.params["player"]!)
             callbacks.didDropBomb?(id)
+        } else if message.method == "respawn" {
+            let id = String(message.params["player"]!)
+            callbacks.playerDidRespawn?(id)
         }
     }
     
@@ -105,6 +111,16 @@ class GameClient {
             "method": "register",
             "params": [
                 "client": "tv"
+            ]
+        ]
+        socket.writeData(try! json.rawData())
+    }
+    
+    func sendPlayerDied(id: String) {
+        let json: JSON = [
+            "method": "die",
+            "params": [
+                "player": id
             ]
         ]
         socket.writeData(try! json.rawData())
