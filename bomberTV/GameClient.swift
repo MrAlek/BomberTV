@@ -45,12 +45,14 @@ extension CGPoint: JSONParsable {
 
 class GameClient {
     struct Callbacks {
-        var didUpdateMove: (CGPoint -> Void)? = nil
+        var didJoinPlayer: ((String, String) -> Void)? = nil
+        var didUpdateMove: ((String, CGPoint) -> Void)? = nil
         var didDropBomb: (() -> Void)? = nil
     }
     var callbacks = Callbacks()
     
-    let socket = WebSocket(url: NSURL(string: "ws://172.16.9.141:4940/")!)
+//    let socket = WebSocket(url: NSURL(string: "ws://172.16.9.141:4940/")!)
+    let socket = WebSocket(url: NSURL(string: "ws://127.0.0.1:4940/")!)
     
     init() {
         socket.onConnect = { [unowned self] _ in
@@ -77,9 +79,16 @@ class GameClient {
             print("Got JSON which isn't a message!"); return
         }
         
-        if message.method == "move" {
+        if message.method == "join" {
+            let id = String(message.params["id"]!)
+            let face = String(message.params["face"]!)
+            
+            callbacks.didJoinPlayer?(id, face)
+        } else if message.method == "move" {
             let point = try! CGPoint(message.params)
-            callbacks.didUpdateMove?(point)
+            let id = String(message.params["player"]!)
+            
+            callbacks.didUpdateMove?(id, point)
         } else if message.method == "bomb" {
             callbacks.didDropBomb?()
         }

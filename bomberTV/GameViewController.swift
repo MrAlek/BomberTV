@@ -53,8 +53,13 @@ class GameViewController: UIViewController {
         skView.ignoresSiblingOrder = true
         skView.presentScene(scene)
         
-        gameClient.callbacks.didUpdateMove = { [weak self] point in
-            self!.scene.lastTouch = point
+        gameClient.callbacks.didJoinPlayer = { [weak self] (id, face) in
+            self!.scene.addPlayerWithId(id, face: face)
+        }
+        
+        gameClient.callbacks.didUpdateMove = { [weak self] (id, point) in
+            let vec = CGVector(dx: point.x, dy: point.y)
+            self!.scene.updatePlayerWithId(id, vec: vec)
         }
         
         gameClient.callbacks.didDropBomb = { [weak self] in
