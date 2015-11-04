@@ -9,6 +9,7 @@
 import SpriteKit
 
 let PlayerPointSize: CGFloat = 60.0
+let Padding: CGFloat = 128.0
 
 class RemotePlayer {
     var id: String
@@ -73,7 +74,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func addPlayerWithId(id: String, face: String) {
+        let corner = Int(arc4random_uniform(4))
         let player = RemotePlayer(id: id, face: face)
+        
+        switch (corner) {
+        case 0: player.node.position = CGPoint(x: Padding, y: Padding)
+        case 1: player.node.position = CGPoint(x: size.width - Padding, y: Padding)
+        case 2: player.node.position = CGPoint(x: Padding, y: size.height - Padding)
+        case 3: player.node.position = CGPoint(x: size.width - Padding, y: size.height - Padding)
+        default: fatalError()
+        }
         
         addChild(player.node)
         allThemPlayers[id] = player
