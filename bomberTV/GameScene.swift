@@ -17,11 +17,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let playerSpeed: CGFloat = 150.0
     var player: SKSpriteNode?
     
-    var lastTouch: CGPoint? = nil {
-        didSet {
-            //print("Move updated: \(lastTouch)")
-        }
-    }
+    var lastTouch: CGPoint = CGPoint(x: 0, y: 0)
     
     // MARK: - SKScene
     
@@ -40,33 +36,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         player?.texture = SKTexture(image: "😈".renderWithSystemFontSize(PlayerPointSize))
         player?.size = player!.texture!.size()
-        
-        // Setup initial camera position
-        updateCamera()
     }
-    
-    
-    // MARK: Touch Handling
-    
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        handleTouches(touches)
-    }
-    
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        handleTouches(touches)
-    }
-    
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        handleTouches(touches)
-    }
-    
-    private func handleTouches(touches: Set<UITouch>) {
-        for touch in touches {
-            let touchLocation = touch.locationInNode(self)
-            lastTouch = touchLocation
-        }
-    }
-    
     
     // MARK - Updates
     
@@ -76,39 +46,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    // Determines if the player's position should be updated
-    private func shouldMove(currentPosition currentPosition: CGPoint, touchPosition: CGPoint) -> Bool {
-        return abs(currentPosition.x - touchPosition.x) > player!.frame.width / 2 ||
-            abs(currentPosition.y - touchPosition.y) > player!.frame.height/2
-    }
-    
     // Updates the player's position by moving towards the last touch made
     func updatePlayer() {
-        if let touch = lastTouch {
-            let currentPosition = player!.position
-            if shouldMove(currentPosition: currentPosition, touchPosition: touch) {
-                
-                let angle = atan2(currentPosition.y - touch.y, currentPosition.x - touch.x) + CGFloat(M_PI)
-                let rotateAction = SKAction.rotateToAngle(angle + CGFloat(M_PI*0.5), duration: 0)
-                
-                player!.runAction(rotateAction)
-                
-                let velocotyX = playerSpeed * cos(angle)
-                let velocityY = playerSpeed * sin(angle)
-                
-                let newVelocity = CGVector(dx: touch.x*playerSpeed, dy: touch.y*playerSpeed)
-                player!.physicsBody!.velocity = newVelocity;
-                updateCamera()
-            } else {
-                player!.physicsBody!.resting = true
-            }
+        let dx = lastTouch.x * playerSpeed
+        let dy = lastTouch.y * playerSpeed
+        
+        if (abs(dx) + abs(dy) <= 0.0001) {
+            player!.physicsBody!.resting = true
+            return
         }
-    }
-    
-    func updateCamera() {
-        if let camera = camera {
-            camera.position = CGPoint(x: player!.position.x, y: player!.position.y)
-        }
+        
+        let angle = atan2(dy, dx) + (CGFloat(M_PI) / 2)
+        let rotateAction = SKAction.rotateToAngle(angle, duration: 0)
+        let newVelocity = CGVector(dx: lastTouch.x * playerSpeed, dy: lastTouch.y * playerSpeed)
+        
+        player!.runAction(rotateAction)
+        player!.physicsBody!.velocity = newVelocity
     }
     
     // MARK: - SKPhysicsContactDelegate

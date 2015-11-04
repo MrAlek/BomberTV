@@ -48,8 +48,9 @@ class GameClient {
         var didUpdateMove: (CGPoint -> Void)? = nil
     }
     var callbacks = Callbacks()
-        
-    let socket = WebSocket(url: NSURL(string: "ws://172.16.9.141:4940/")!)
+    
+//    let socket = WebSocket(url: NSURL(string: "ws://172.16.9.141:4940/")!)
+    let socket = WebSocket(url: NSURL(string: "ws://127.0.0.1:4940/")!)
     
     init() {
         socket.onConnect = { [unowned self] _ in
