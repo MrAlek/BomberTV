@@ -75,6 +75,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let bomb = SKSpriteNode.bomb(PlayerPointSize)
         bomb.position = position
         addChild(bomb)
+        
+        runAction(SKAction.waitForDuration(2), completion: { [weak self] in
+            bomb.removeFromParent()
+            self!.addExplosionAtPosition(position)
+            })
+    }
+    
+    func addExplosionAtPosition(position: CGPoint) {
+        var emitterNode = SKEmitterNode(fileNamed: "Explosion")!
+        emitterNode.particlePosition = position
+        addChild(emitterNode)
+        runAction(SKAction.waitForDuration(2), completion: { emitterNode.removeFromParent() })
     }
     
     // MARK: - SKPhysicsContactDelegate

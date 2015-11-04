@@ -16,5 +16,3 @@ extension SKSpriteNode {
         return bomb
     }
 }
-
-

@@ -19,6 +19,8 @@
 		9337F0BF1BE7EEA5000352B3 /* JSONParsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9337F0BE1BE7EEA5000352B3 /* JSONParsable.swift */; };
 		9337F1041BEA5022000352B3 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9337F1031BEA5022000352B3 /* Utility.swift */; };
 		9337F1071BEA5C7D000352B3 /* Bomb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9337F1061BEA5C7D000352B3 /* Bomb.swift */; };
+		9337F10A1BEA5FF6000352B3 /* Explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9337F1081BEA5FF6000352B3 /* Explosion.sks */; };
+		9337F10B1BEA5FF6000352B3 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 9337F1091BEA5FF6000352B3 /* spark.png */; };
 		CA3D6911ED7D3F84D528E980 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0A48234E59C5C335063CC99 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +40,8 @@
 		9337F0BE1BE7EEA5000352B3 /* JSONParsable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParsable.swift; sourceTree = "<group>"; };
 		9337F1031BEA5022000352B3 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		9337F1061BEA5C7D000352B3 /* Bomb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bomb.swift; sourceTree = "<group>"; };
+		9337F1081BEA5FF6000352B3 /* Explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Explosion.sks; sourceTree = "<group>"; };
+		9337F1091BEA5FF6000352B3 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		A0A48234E59C5C335063CC99 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B285294FA0D76006E86F845E /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -89,6 +93,8 @@
 				9337F0B91BE7EB69000352B3 /* GameClient.swift */,
 				9337F0A41BE7DEAE000352B3 /* AppDelegate.swift */,
 				9337F1031BEA5022000352B3 /* Utility.swift */,
+				9337F1081BEA5FF6000352B3 /* Explosion.sks */,
+				9337F1091BEA5FF6000352B3 /* spark.png */,
 				9337F0A61BE7DEAE000352B3 /* art.scnassets */,
 				9337F0A81BE7DEAE000352B3 /* GameViewController.swift */,
 				9337F1061BEA5C7D000352B3 /* Bomb.swift */,
@@ -144,6 +150,7 @@
 				TargetAttributes = {
 					9337F0A01BE7DEAE000352B3 = {
 						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = 8NE4A2X2SH;
 					};
 				};
 			};
@@ -171,7 +178,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				9337F0B81BE7E850000352B3 /* GameScene.sks in Resources */,
+				9337F10B1BEA5FF6000352B3 /* spark.png in Resources */,
 				9337F0A71BE7DEAE000352B3 /* art.scnassets in Resources */,
+				9337F10A1BEA5FF6000352B3 /* Explosion.sks in Resources */,
 				9337F0AE1BE7DEAE000352B3 /* Assets.xcassets in Resources */,
 				9337F0AC1BE7DEAE000352B3 /* Main.storyboard in Resources */,
 			);
@@ -344,6 +353,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = bomberTV/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = bomber.bomberTV;
@@ -357,6 +367,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = bomberTV/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = bomber.bomberTV;
