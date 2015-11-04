@@ -13,6 +13,7 @@ extension SKSpriteNode {
     static func bomb(size: CGFloat) -> SKSpriteNode {
         let bomb = SKSpriteNode(text: "💣", size: size)
         bomb.name = "bomb"
+        bomb.zPosition = -1
         return bomb
     }
 }

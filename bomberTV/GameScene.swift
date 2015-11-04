@@ -14,6 +14,7 @@ class RemotePlayer {
     var id: String
     var vec: CGVector
     var node: SKSpriteNode
+    var shouldDropBomb: Bool = false
     
     init(id: String, face: String) {
         self.id = id
@@ -46,21 +47,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didSimulatePhysics() {
         for (_, player) in allThemPlayers {
-            let dx = player.vec.dx * playerSpeed
-            let dy = player.vec.dy * playerSpeed
-            
-            if (abs(dx) + abs(dy) <= 0.0001) {
-                player.node.physicsBody!.resting = true
-                return
+            updatePlayerPosition(player)
+            if player.shouldDropBomb {
+                dropBombAtPosition(player.node.position)
+                player.shouldDropBomb = false
             }
-            
-            let angle = atan2(dy, dx) + (CGFloat(M_PI) / 2)
-            let rotateAction = SKAction.rotateToAngle(angle, duration: 0)
-            let newVelocity = CGVector(dx: dx, dy: dy)
-            
-            player.node.runAction(rotateAction)
-            player.node.physicsBody!.velocity = newVelocity
         }
+    }
+    
+    func updatePlayerPosition(player: RemotePlayer) {
+        let dx = player.vec.dx * playerSpeed
+        let dy = player.vec.dy * playerSpeed
+        
+        if (abs(dx) + abs(dy) <= 0.0001) {
+            player.node.physicsBody!.resting = true
+            return
+        }
+        
+        let angle = atan2(dy, dx) + (CGFloat(M_PI) / 2)
+        let rotateAction = SKAction.rotateToAngle(angle, duration: 0)
+        let newVelocity = CGVector(dx: dx, dy: dy)
+        
+        player.node.runAction(rotateAction)
+        player.node.physicsBody!.velocity = newVelocity
     }
     
     func addPlayerWithId(id: String, face: String) {
@@ -68,20 +77,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         addChild(player.node)
         allThemPlayers[id] = player
-    }
-    
-    func updatePlayerWithId(id: String, vec: CGVector) {
-        if let player = allThemPlayers[id] {
-            player.vec = vec
-        }
-    }
-    
-    // Updates the player's position by moving towards the last touch made
-    func updatePlayer() {
-//        if shouldDropBomb {
-//            dropBombAtPosition(player!.position)
-//            shouldDropBomb = false
-//        }
     }
     
     func dropBombAtPosition(position: CGPoint) {

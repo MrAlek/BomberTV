@@ -59,11 +59,11 @@ class GameViewController: UIViewController {
         
         gameClient.callbacks.didUpdateMove = { [weak self] (id, point) in
             let vec = CGVector(dx: point.x, dy: point.y)
-            self!.scene.updatePlayerWithId(id, vec: vec)
+            self?.scene.allThemPlayers[id]?.vec = vec
         }
         
-        gameClient.callbacks.didDropBomb = { [weak self] in
-            self!.scene.shouldDropBomb = true
+        gameClient.callbacks.didDropBomb = { [weak self] id in
+            self?.scene.allThemPlayers[id]?.shouldDropBomb = true
         }
     }
 }
