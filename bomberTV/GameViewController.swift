@@ -52,11 +52,15 @@ class GameViewController: UIViewController {
         /* Sprite Kit applies additional optimizations to improve rendering performance */
         skView.ignoresSiblingOrder = true
         skView.presentScene(scene)
-        
-        gameClient.callbacks.didJoinPlayer = { [weak self] (id, face) in
+
+        gameClient.callbacks.playerDidJoin = { [weak self] (id, face) in
             self!.scene.addPlayerWithId(id, face: face)
         }
-        
+
+        gameClient.callbacks.playerDidLeave = { [weak self] (id) in
+            self!.scene.removePlayerWithId(id)
+        }
+
         gameClient.callbacks.didUpdateMove = { [weak self] (id, point) in
             let vec = CGVector(dx: point.x, dy: point.y)
             self?.scene.allThemPlayers[id]?.vec = vec

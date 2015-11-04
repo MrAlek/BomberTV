@@ -78,7 +78,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(player.node)
         allThemPlayers[id] = player
     }
-    
+
+    func removePlayerWithId(id: String) {
+        if let player = allThemPlayers[id] {
+            player.node.removeFromParent()
+            allThemPlayers.removeValueForKey(id)
+        }
+    }
+
     func dropBombAtPosition(position: CGPoint) {
         let bomb = SKSpriteNode.bomb(PlayerPointSize)
         bomb.position = position

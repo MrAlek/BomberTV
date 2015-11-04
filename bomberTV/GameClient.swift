@@ -45,7 +45,8 @@ extension CGPoint: JSONParsable {
 
 class GameClient {
     struct Callbacks {
-        var didJoinPlayer: ((String, String) -> Void)? = nil
+        var playerDidJoin: ((String, String) -> Void)? = nil
+        var playerDidLeave: (String -> Void)? = nil
         var didUpdateMove: ((String, CGPoint) -> Void)? = nil
         var didDropBomb: (String -> Void)? = nil
     }
@@ -82,8 +83,12 @@ class GameClient {
         if message.method == "join" {
             let id = String(message.params["id"]!)
             let face = String(message.params["face"]!)
-            
-            callbacks.didJoinPlayer?(id, face)
+
+            callbacks.playerDidJoin?(id, face)
+        } else if message.method == "leave" {
+            let id = String(message.params["player"]!)
+
+            callbacks.playerDidLeave?(id)
         } else if message.method == "move" {
             let point = try! CGPoint(message.params)
             let id = String(message.params["player"]!)

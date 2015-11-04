@@ -123,6 +123,13 @@ raptor.method('close', (req, cb) => {
   if (req.source.player) {
     const idx = allThemPlayers.indexOf(req.source.player)
     allThemPlayers.splice(idx, 1)
+
+    sendToTv({
+      method: 'leave',
+      params: {
+        player: req.source.player.id
+      }
+    })
   }
 
   cb(null)
