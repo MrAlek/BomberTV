@@ -49,7 +49,7 @@ class GameClient {
     }
     var callbacks = Callbacks()
         
-    let socket = WebSocket(url: NSURL(string: "ws://10.0.22.10:4940/")!)
+    let socket = WebSocket(url: NSURL(string: "ws://172.16.9.141:4940/")!)
     
     init() {
         socket.onConnect = { [unowned self] _ in

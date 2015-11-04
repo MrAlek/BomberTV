@@ -8,6 +8,8 @@
 
 import SpriteKit
 
+let PlayerPointSize: CGFloat = 60.0
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // MARK: - Instance Variables
@@ -29,7 +31,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // Setup player
         player = self.childNodeWithName("player") as? SKSpriteNode
-    
+        
+        let label = UILabel()
+        
+        label.font = UIFont.systemFontOfSize(40)
+        label.frame = CGRect(x: 0, y: 0, width: label.intrinsicContentSize().width, height: label.intrinsicContentSize().height)
+        label.backgroundColor = UIColor.clearColor()
+        
+        player?.texture = SKTexture(image: "😈".renderWithSystemFontSize(PlayerPointSize))
+        player?.size = player!.texture!.size()
+        
         // Setup initial camera position
         updateCamera()
     }
