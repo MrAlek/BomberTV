@@ -29,6 +29,8 @@ raptor.method('register', (req, cb) => {
   req.require('client', 'string')
   req.source.type = req.param('client')
 
+  console.error('Connect', req.source.type)
+
   if (req.source.type === 'tv') appleTv = req.source
 
   cb(null)
@@ -77,6 +79,12 @@ raptor.method('bomb', (req, cb) => {
   cb(null)
 })
 
+raptor.method('close', (req, cb) => {
+  if (req.source === appleTv) appleTv = null
+
+  cb(null)
+})
+
 wsServer.on('connection', (client) => {
   const raptorClient = raptor.connection()
 
@@ -91,6 +99,14 @@ wsServer.on('connection', (client) => {
       if (err) throw err
 
       if (response) client.send(JSON.stringify(response))
+    })
+  })
+
+  client.on('close', () => {
+    let data = { jsonrpc: '2.0', method: 'close', params: {}}
+
+    raptorClient.handleObject(data, function (err) {
+      if (err) console.error(err.stack)
     })
   })
 })
