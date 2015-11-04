@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bomber TV</title>
+  <style type="text/css">
+
+    html {
+      height: 100%;
+    }
+
+    body {
+      min-height: 100%;
+      margin: 0;
+      background-color: #eee;
+    }
+
+    #face {
+      text-align: center;
+      align-self: flex-start;
+    }
+
+    #face span {
+      display: block;
+      transform: translateY(80px) scale(4);
+    }
+
+    #content {
+      display: flex;
+      height: 100vh;
+    }
+
+    #left {
+      flex-grow: 1;
+      background-color: #fcc;
+    }
+
+    #right {
+      flex-grow: 1;
+      background-color: #cfc;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div id="content">
+    <div id="left"></div>
+    <div id="face"><span></span></div>
+    <div id="right"></div>
+  </div>
+
+  <script type="text/javascript" src="build.js"></script>
+</body>
+</html>

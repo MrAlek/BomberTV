@@ -1,0 +1,17 @@
+{
+  "name": "bomber-tv",
+  "version": "0.0.0",
+  "dependencies": {
+    "babelify": "^6.4.0",
+    "browserify": "^12.0.1",
+    "nipplejs": "^0.5.3",
+    "raptor-client": "^0.1.2",
+    "raptor-rpc": "^0.2.2",
+    "watchify": "^3.6.0",
+    "ws": "^0.8.0"
+  },
+  "scripts": {
+    "build": "browserify -t babelify client/index.js -o public/build.js",
+    "build-watch": "watchify -d -t babelify client/index.js -o public/build.js"
+  }
+}
