@@ -71,7 +71,7 @@ raptor.method('register', (req, cb) => {
 
 raptor.method('join', (req, cb) => {
   const player = {
-    id: playerId++,
+    id: String(playerId++),
     face: randomFace(),
     lastState: { dx: 0, dy: 0, bomb: false }
   }
