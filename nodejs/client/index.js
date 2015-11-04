@@ -21,7 +21,11 @@ client.send('join', null, (err, player) => {
     client.send('move', { x, y })
   })
 
-  divRight.addEventListener('touchdown', (ev) => {
+  manager.on('end', (evt) => {
+    client.send('move', { x: 0, y: 0 })
+  })
+
+  divRight.addEventListener('touchstart', (ev) => {
     ev.preventDefault()
 
     client.send('bomb', {})

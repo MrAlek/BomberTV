@@ -64,6 +64,19 @@ raptor.method('move', (req, cb) => {
   cb(null)
 })
 
+raptor.method('bomb', (req, cb) => {
+  sendToTv({
+    method: 'bomb',
+    params: {
+      player: req.source.player.id
+    }
+  })
+
+  process.stderr.write(`\r  BOMB!!        `)
+
+  cb(null)
+})
+
 wsServer.on('connection', (client) => {
   const raptorClient = raptor.connection()
 
