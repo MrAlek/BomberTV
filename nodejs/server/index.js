@@ -37,7 +37,7 @@ function refreshScreen () {
   let lines = []
 
   lines.push('http://localhost:' + PORT)
-  lines.push('---------------------')
+  lines.push('--------------------------')
 
   if (appleTv) {
     lines.push(' 📺  Apple TV')
@@ -73,18 +73,23 @@ raptor.method('join', (req, cb) => {
   const player = {
     id: String(playerId++),
     face: randomFace(),
-    lastState: { dx: 0, dy: 0, bomb: false }
+    lastState: { dx: 0, dy: 0, bomb: false },
+    websocket: req.source.websocket
+  }
+  const publicPlayer = {
+    id: player.id,
+    face: player.face
   }
 
   allThemPlayers.push(player)
 
   sendToTv({
     method: 'join',
-    params: player
+    params: publicPlayer
   })
 
   req.source.player = player
-  cb(null, player)
+  cb(null, publicPlayer)
 })
 
 raptor.method('move', (req, cb) => {
@@ -117,6 +122,29 @@ raptor.method('bomb', (req, cb) => {
   setTimeout(() => { req.source.player.lastState.bomb = false }, 2000)
 
   cb(null)
+})
+
+raptor.method('die', (req, cb) => {
+  req.require('player', 'string')
+
+  const playerId = req.param('player')
+  const player = allThemPlayers.find((p) => p.id === playerId)
+
+  if (!player) return
+
+  player.websocket.send(JSON.stringify({
+    method: 'die',
+    params: {}
+  }))
+})
+
+raptor.method('respawn', (req, cb) => {
+  sendToTv({
+    method: 'respawn',
+    params: {
+      player: req.source.player.id
+    }
+  })
 })
 
 raptor.method('close', (req, cb) => {
