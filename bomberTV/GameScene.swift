@@ -56,6 +56,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.contactDelegate = self
     }
     
+    override func sceneDidLoad() {
+        super.sceneDidLoad()
+        
+        addSnow()
+    }
+    
     // MARK - Updates
     
     override func didSimulatePhysics() {
@@ -140,6 +146,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             emitterNode.removeFromParent()
             node.removeFromParent()
         })
+    }
+    
+    func addSnow() {
+        let emitterNode = SKEmitterNode(fileNamed: "Snow")!
+        emitterNode.position = CGPoint(x: 960, y: 1080)
+        addChild(emitterNode)
     }
     
     // MARK: - SKPhysicsContactDelegate

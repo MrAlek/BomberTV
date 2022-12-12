@@ -14,6 +14,8 @@ import SpriteKit
 class GameViewController: UIViewController {
     
     
+    @IBOutlet weak var gameView: SKView!
+    
     lazy var scene: GameScene = {
         // Load 'GameScene.sks' as an SKScene.
         guard let scene = SKScene(fileNamed: "GameScene") as? GameScene else {
@@ -30,13 +32,18 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let skView = self.view as! SKView
-        skView.showsFPS = true
-        skView.showsNodeCount = true
+        gameView.showsFPS = true
+        gameView.showsNodeCount = true
         
         /* Sprite Kit applies additional optimizations to improve rendering performance */
-        skView.ignoresSiblingOrder = true
-        skView.presentScene(scene)
+        gameView.ignoresSiblingOrder = true
+        gameView.presentScene(scene)
+        
+        /*let flake: UIImage = UIImage(named: "snowflake")!
+
+        let snowflake = Snowflake(view: snowView, particles: [flake: .white])
+        
+        snowView.layer.addSublayer(snowflake)*/
 
         GameClient.sharedClient.callbacks.playerDidJoin = { [weak self] (id, face) in
             self!.scene.addPlayerWithId(id: id, face: face)

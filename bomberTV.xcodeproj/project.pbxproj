@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4CC083582DECB68B0DF64B2B /* Pods_bomberTV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA63F191A2F4450E885CEAB /* Pods_bomberTV.framework */; };
+		7467ED7B2947CD8C00B78AB3 /* Snow.sks in Resources */ = {isa = PBXBuildFile; fileRef = 7467ED7A2947CD8C00B78AB3 /* Snow.sks */; };
 		9337F0A51BE7DEAE000352B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9337F0A41BE7DEAE000352B3 /* AppDelegate.swift */; };
 		9337F0A71BE7DEAE000352B3 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 9337F0A61BE7DEAE000352B3 /* art.scnassets */; };
 		9337F0A91BE7DEAE000352B3 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9337F0A81BE7DEAE000352B3 /* GameViewController.swift */; };
@@ -21,11 +22,11 @@
 		9337F1041BEA5022000352B3 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9337F1031BEA5022000352B3 /* Utility.swift */; };
 		9337F1071BEA5C7D000352B3 /* Bomb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9337F1061BEA5C7D000352B3 /* Bomb.swift */; };
 		9337F10A1BEA5FF6000352B3 /* Explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9337F1081BEA5FF6000352B3 /* Explosion.sks */; };
-		9337F10B1BEA5FF6000352B3 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 9337F1091BEA5FF6000352B3 /* spark.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4CA63F191A2F4450E885CEAB /* Pods_bomberTV.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_bomberTV.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7467ED7A2947CD8C00B78AB3 /* Snow.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Snow.sks; sourceTree = "<group>"; };
 		9337F0A11BE7DEAE000352B3 /* bomberTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bomberTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9337F0A41BE7DEAE000352B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9337F0A61BE7DEAE000352B3 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -41,7 +42,6 @@
 		9337F1031BEA5022000352B3 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		9337F1061BEA5C7D000352B3 /* Bomb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bomb.swift; sourceTree = "<group>"; };
 		9337F1081BEA5FF6000352B3 /* Explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Explosion.sks; sourceTree = "<group>"; };
-		9337F1091BEA5FF6000352B3 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		CC163B81A3CF878967A8C45F /* Pods-bomberTV.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bomberTV.release.xcconfig"; path = "Target Support Files/Pods-bomberTV/Pods-bomberTV.release.xcconfig"; sourceTree = "<group>"; };
 		F54198EEBBA30FD8D0B88133 /* Pods-bomberTV.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bomberTV.debug.xcconfig"; path = "Target Support Files/Pods-bomberTV/Pods-bomberTV.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -72,7 +72,6 @@
 				F54198EEBBA30FD8D0B88133 /* Pods-bomberTV.debug.xcconfig */,
 				CC163B81A3CF878967A8C45F /* Pods-bomberTV.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -103,7 +102,7 @@
 				9337F0A41BE7DEAE000352B3 /* AppDelegate.swift */,
 				9337F1031BEA5022000352B3 /* Utility.swift */,
 				9337F1081BEA5FF6000352B3 /* Explosion.sks */,
-				9337F1091BEA5FF6000352B3 /* spark.png */,
+				7467ED7A2947CD8C00B78AB3 /* Snow.sks */,
 				9337F0A61BE7DEAE000352B3 /* art.scnassets */,
 				9337F0A81BE7DEAE000352B3 /* GameViewController.swift */,
 				9337F1061BEA5C7D000352B3 /* Bomb.swift */,
@@ -178,10 +177,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				9337F0B81BE7E850000352B3 /* GameScene.sks in Resources */,
-				9337F10B1BEA5FF6000352B3 /* spark.png in Resources */,
 				9337F0A71BE7DEAE000352B3 /* art.scnassets in Resources */,
 				9337F10A1BEA5FF6000352B3 /* Explosion.sks in Resources */,
 				9337F0AE1BE7DEAE000352B3 /* Assets.xcassets in Resources */,
+				7467ED7B2947CD8C00B78AB3 /* Snow.sks in Resources */,
 				9337F0AC1BE7DEAE000352B3 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

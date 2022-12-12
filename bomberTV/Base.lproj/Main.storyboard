@@ -15,10 +15,20 @@
                         <viewControllerLayoutGuide type="top" id="cGA-2J-nSk"/>
                         <viewControllerLayoutGuide type="bottom" id="w2s-pT-Gc2"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="qmD-7w-6Ok" customClass="SKView">
+                    <view key="view" contentMode="scaleToFill" id="qmD-7w-6Ok">
                         <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jhI-Fm-Un4" customClass="SKView">
+                                <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
                     </view>
+                    <connections>
+                        <outlet property="gameView" destination="jhI-Fm-Un4" id="ZAP-sI-ZDw"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bcr-CG-bks" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

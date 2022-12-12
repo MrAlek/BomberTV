@@ -9,5 +9,6 @@ target 'bomberTV' do
   # Pods for bomberTV
   pod 'SwiftyJSON'
   pod 'Starscream'
+  pod 'Snowflake'
   
 end
