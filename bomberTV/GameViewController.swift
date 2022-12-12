@@ -11,9 +11,9 @@ import QuartzCore
 import SpriteKit
 
 
-class GameViewController: UIViewController {
+class GameViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var gameView: SKView!
     
     lazy var scene: GameScene = {
@@ -31,26 +31,19 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        gameView.showsFPS = true
-        gameView.showsNodeCount = true
-        
+
         /* Sprite Kit applies additional optimizations to improve rendering performance */
         gameView.ignoresSiblingOrder = true
         gameView.presentScene(scene)
-        
-        /*let flake: UIImage = UIImage(named: "snowflake")!
-
-        let snowflake = Snowflake(view: snowView, particles: [flake: .white])
-        
-        snowView.layer.addSublayer(snowflake)*/
 
         GameClient.sharedClient.callbacks.playerDidJoin = { [weak self] (id, face) in
             self!.scene.addPlayerWithId(id: id, face: face)
+            self!.tableView.reloadData()
         }
 
         GameClient.sharedClient.callbacks.playerDidLeave = { [weak self] (id) in
             self!.scene.removePlayerWithId(id: id)
+            self!.tableView.reloadData()
         }
 
         GameClient.sharedClient.callbacks.didUpdateMove = { [weak self] (id, point) in
@@ -65,5 +58,32 @@ class GameViewController: UIViewController {
         GameClient.sharedClient.callbacks.playerDidRespawn = { [weak self] id in
             self?.scene.respawnPlayer(id: id)
         }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "lol") ?? UITableViewCell(style: .value2, reuseIdentifier: "lol")
+        
+        //cell.textLabel?.text = "Löl"
+        cell.textLabel?.text = Array(scene.allThemPlayers.values)[indexPath.row].face
+        //cell.textLabel?.font = UIFont(name: "System", size: 36)
+        //cell.detailTextLabel?.text = "4"
+        cell.detailTextLabel?.textColor = .black
+        //cell.detailTextLabel?.font = UIFont(name: "System", size: 18)
+        
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return scene.allThemPlayers.count
+        //return 10
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 26
     }
 }

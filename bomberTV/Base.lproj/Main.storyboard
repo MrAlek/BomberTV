@@ -24,10 +24,33 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" sectionHeaderHeight="66" sectionFooterHeight="66" translatesAutoresizingMaskIntoConstraints="NO" id="ceh-kp-hhN">
+                                <rect key="frame" x="1504" y="80" width="320" height="700"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="700" id="ALP-vK-wU7"/>
+                                    <constraint firstAttribute="width" constant="320" id="AwM-Q6-E9z"/>
+                                </constraints>
+                                <label key="tableHeaderView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="                 Scores" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EfB-Ku-dQf">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="46"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <connections>
+                                    <outlet property="dataSource" destination="afC-WO-gFA" id="BdC-r0-cyN"/>
+                                    <outlet property="delegate" destination="afC-WO-gFA" id="e36-li-0YL"/>
+                                </connections>
+                            </tableView>
                         </subviews>
+                        <constraints>
+                            <constraint firstItem="ceh-kp-hhN" firstAttribute="top" secondItem="cGA-2J-nSk" secondAttribute="bottom" constant="20" id="QaA-WZ-cGf"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ceh-kp-hhN" secondAttribute="trailing" id="YxA-1v-YpB"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="gameView" destination="jhI-Fm-Un4" id="ZAP-sI-ZDw"/>
+                        <outlet property="tableView" destination="ceh-kp-hhN" id="tR8-Oq-gPi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bcr-CG-bks" userLabel="First Responder" sceneMemberID="firstResponder"/>
