@@ -10,7 +10,7 @@ import SwiftyJSON
 
 extension JSON {
     
-    enum Error: ErrorType {
+    enum Error: Swift.Error {
         case NotADictionary
         case NotAString
         case NotAnArray
@@ -18,14 +18,14 @@ extension JSON {
     }
     
     func assert<T: JSONParsable>(key: String, type: T.Type) throws {
-        guard case .Dictionary = self.type else {
+        guard case .dictionary = self.type else {
             throw Error.NotADictionary
         }
-        try T.assert(self[key])
+        try T.assert(json: self[key])
     }
     
     func get<T: JSONParsable>(key: String) throws -> T {
-        guard case .Dictionary = type else {
+        guard case .dictionary = type else {
             throw Error.NotADictionary
         }
         
@@ -33,7 +33,7 @@ extension JSON {
     }
     
     func get(key: String) throws -> String {
-        guard case .Dictionary = type else {
+        guard case .dictionary = type else {
             throw Error.NotADictionary
         }
         
@@ -44,7 +44,7 @@ extension JSON {
         return string
     }
     func get(key: String) throws -> [JSON] {
-        guard case .Dictionary = type else {
+        guard case .dictionary = type else {
             throw Error.NotADictionary
         }
         
@@ -55,7 +55,7 @@ extension JSON {
         return array
     }
     func get(key: String) throws -> [[String: JSON]] {
-        guard case .Dictionary = type else {
+        guard case .dictionary = type else {
             throw Error.NotADictionary
         }
         
@@ -67,7 +67,7 @@ extension JSON {
     }
     
     func get(key: String) throws -> [String: JSON] {
-        guard case .Dictionary = type else {
+        guard case .dictionary = type else {
             throw Error.NotADictionary
         }
         
@@ -79,7 +79,7 @@ extension JSON {
     }
     
     func get(key: String) throws -> Double {
-        guard case .Dictionary = type else {
+        guard case .dictionary = type else {
             throw Error.NotADictionary
         }
         
@@ -91,7 +91,7 @@ extension JSON {
     }
     
     func getOptional(key: String) throws -> [JSON]? {
-        guard case .Dictionary = type else {
+        guard case .dictionary = type else {
             throw Error.NotADictionary
         }
         
@@ -99,7 +99,7 @@ extension JSON {
     }
     
     func getOptional(key: String) throws -> [String: JSON]? {
-        guard case .Dictionary = type else {
+        guard case .dictionary = type else {
             throw Error.NotADictionary
         }
         
@@ -107,7 +107,7 @@ extension JSON {
     }
     
     func getOptional(key: String) throws -> String? {
-        guard case .Dictionary = type else {
+        guard case .dictionary = type else {
             throw Error.NotADictionary
         }
         

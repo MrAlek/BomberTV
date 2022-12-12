@@ -1,22 +1,20 @@
 PODS:
-  - Starscream (1.0.1)
-  - SwiftyJSON (2.3.1)
+  - Starscream (4.0.4)
+  - SwiftyJSON (5.0.1)
 
 DEPENDENCIES:
-  - Starscream (from `https://github.com/daltoniam/Starscream.git`)
+  - Starscream
   - SwiftyJSON
 
-EXTERNAL SOURCES:
-  Starscream:
-    :git: https://github.com/daltoniam/Starscream.git
-
-CHECKOUT OPTIONS:
-  Starscream:
-    :commit: 756a42756a1a1a000858da6f52ec1445f7279516
-    :git: https://github.com/daltoniam/Starscream.git
+SPEC REPOS:
+  trunk:
+    - Starscream
+    - SwiftyJSON
 
 SPEC CHECKSUMS:
-  Starscream: 4ed9a5d6ade438224cf5868c0b1e6a51e0026238
-  SwiftyJSON: 592b53bee5ef3dd9b3bebc6b9cb7ee35426ae8c3
+  Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
+  SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 9b5eaed0a183e953526437397b92b791c69f3888
+
+COCOAPODS: 1.11.3

@@ -30,9 +30,3 @@ extension JSONParsable {
         try self.init(JSON(json))
     }
 }
-
-extension CollectionType where Generator.Element == JSON {
-    func parseArray<T: JSONParsable>() throws -> [T] {
-        return try map(T.init)
-    }
-}

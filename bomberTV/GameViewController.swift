@@ -10,34 +10,20 @@ import UIKit
 import QuartzCore
 import SpriteKit
 
-extension SKNode {
-    
-    class func unarchiveFromFile(file : String) -> SKNode? {
-        if let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks") {
-            let sceneData = try! NSData(contentsOfFile: path, options: .DataReadingMappedIfSafe)
-            let archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
-            
-            archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
-            let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as! GameScene
-            archiver.finishDecoding()
-            return scene
-        } else {
-            return nil
-        }
-    }
-    
-}
-
 
 class GameViewController: UIViewController {
     
     
     lazy var scene: GameScene = {
-        let scene = GameScene.unarchiveFromFile("GameScene") as! GameScene
-        // Configure the view.
+        // Load 'GameScene.sks' as an SKScene.
+        guard let scene = SKScene(fileNamed: "GameScene") as? GameScene else {
+            print("Failed to load GameScene.sks")
+            abort()
+        }
         
-        /* Set the scale mode to scale to fit the window */
-        scene.scaleMode = .AspectFill
+        // Set the scale mode to scale to fit the window
+        scene.scaleMode = .aspectFill
+        
         return scene
     }()
     
@@ -53,11 +39,11 @@ class GameViewController: UIViewController {
         skView.presentScene(scene)
 
         GameClient.sharedClient.callbacks.playerDidJoin = { [weak self] (id, face) in
-            self!.scene.addPlayerWithId(id, face: face)
+            self!.scene.addPlayerWithId(id: id, face: face)
         }
 
         GameClient.sharedClient.callbacks.playerDidLeave = { [weak self] (id) in
-            self!.scene.removePlayerWithId(id)
+            self!.scene.removePlayerWithId(id: id)
         }
 
         GameClient.sharedClient.callbacks.didUpdateMove = { [weak self] (id, point) in
@@ -70,7 +56,7 @@ class GameViewController: UIViewController {
         }
         
         GameClient.sharedClient.callbacks.playerDidRespawn = { [weak self] id in
-            self?.scene.respawnPlayer(id)
+            self?.scene.respawnPlayer(id: id)
         }
     }
 }

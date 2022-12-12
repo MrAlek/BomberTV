@@ -11,10 +11,7 @@ import Starscream
 import SwiftyJSON
 
 enum MessageMethod: String {
-    
     case Register = "register"
-    
-    
 }
 
 struct Message: JSONParsable {
@@ -28,15 +25,17 @@ struct Message: JSONParsable {
     }
     
     init(_ json: JSON) throws {
-        method = try json.get("method")
-        params = try json.get("params")
+        method = try json.get(key: "method")
+        params = try json.get(key: "params")
     }
 }
 
 extension CGPoint: JSONParsable {
     init(_ json: JSON) throws {
-        let x: Double = try json.get("x")
-        let y: Double = try json.get("y")
+        let x: Double = try json.get(key: "x")
+        let y: Double = try json.get(key: "y")
+        
+        self.init()
         self.x = CGFloat(x)
         self.y = CGFloat(y)
     }
@@ -46,34 +45,46 @@ extension CGPoint: JSONParsable {
 class GameClient {
     struct Callbacks {
         var playerDidJoin: ((String, String) -> Void)? = nil
-        var playerDidLeave: (String -> Void)? = nil
+        var playerDidLeave: ((String) -> Void)? = nil
         var didUpdateMove: ((String, CGPoint) -> Void)? = nil
-        var didDropBomb: (String -> Void)? = nil
-        var playerDidRespawn: (String -> Void)? = nil
+        var didDropBomb: ((String) -> Void)? = nil
+        var playerDidRespawn: ((String) -> Void)? = nil
     }
     var callbacks = Callbacks()
+    let request = URLRequest(url: URL(string: "ws://192.168.0.46:4940/")!)
     
-   let socket = WebSocket(url: NSURL(string: "ws://172.16.9.141:4940/")!)
-//    let socket = WebSocket(url: NSURL(string: "ws://127.0.0.1:4940/")!)
+    var socket: WebSocket;
     
     static let sharedClient = GameClient()
     
     init() {
-        socket.onConnect = { [unowned self] _ in
-            print("Connected!")
-            self.sendRegister()
+        socket = WebSocket(request: request)
+        socket.onEvent = { event in
+            switch event {
+            case .connected(_):
+                print("Connected!")
+                self.sendRegister()
+            case .text(let text):
+                self.handleString(string: text)
+            case .binary(let data):
+                self.handleData(data: data)
+            default:
+                return
+            }
         }
-        socket.onText = handleString
-        socket.onData = handleData
         socket.connect()
     }
     
     func handleString(string: String) {
-        handleJSON(JSON(data: string.dataUsingEncoding(NSUTF8StringEncoding)!))
+        if let dataFromString = string.data(using: .utf8, allowLossyConversion: false), let json = try? JSON(data: dataFromString) {
+            handleJSON(json: json)
+        }
     }
     
-    func handleData(data: NSData) {
-        handleJSON(JSON(data: data))
+    func handleData(data: Data) {
+        if let json = try? JSON(data: data) {
+            handleJSON(json: json)
+        }
     }
     
     func handleJSON(json: JSON) {
@@ -84,24 +95,24 @@ class GameClient {
         }
         
         if message.method == "join" {
-            let id = String(message.params["id"]!)
-            let face = String(message.params["face"]!)
-
+            let id = message.params["id"]!.stringValue
+            let face = message.params["face"]!.stringValue
+            
             callbacks.playerDidJoin?(id, face)
         } else if message.method == "leave" {
-            let id = String(message.params["player"]!)
-
+            let id = message.params["player"]!.stringValue
+            
             callbacks.playerDidLeave?(id)
         } else if message.method == "move" {
             let point = try! CGPoint(message.params)
-            let id = String(message.params["player"]!)
+            let id = message.params["player"]!.stringValue
             
             callbacks.didUpdateMove?(id, point)
         } else if message.method == "bomb" {
-            let id = String(message.params["player"]!)
+            let id = message.params["player"]!.stringValue
             callbacks.didDropBomb?(id)
         } else if message.method == "respawn" {
-            let id = String(message.params["player"]!)
+            let id = message.params["player"]!.stringValue
             callbacks.playerDidRespawn?(id)
         }
     }
@@ -113,7 +124,7 @@ class GameClient {
                 "client": "tv"
             ]
         ]
-        socket.writeData(try! json.rawData())
+        socket.write(data: try! json.rawData())
     }
     
     func sendPlayerDied(id: String) {
@@ -123,7 +134,7 @@ class GameClient {
                 "player": id
             ]
         ]
-        socket.writeData(try! json.rawData())
+        socket.write(data: try! json.rawData())
     }
     
 }

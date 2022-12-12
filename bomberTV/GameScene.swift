@@ -22,7 +22,7 @@ class RemotePlayer {
     init(id: String, face: String) {
         self.face = face
         self.id = id
-        self.node = NewPlayerNode(id, text: face)
+        self.node = NewPlayerNode(id: id, text: face)
         self.vec = CGVector(dx: 0, dy: 0)
     }
 }
@@ -40,8 +40,6 @@ func NewPlayerNode(id: String, text: String) -> SKNode {
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
-    
-    
     // MARK: - Instance Variables
     
     let playerSpeed: CGFloat = 300.0
@@ -53,7 +51,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // MARK: - SKScene
     
-    override func didMoveToView(view: SKView) {
+    override func didMove(to view: SKView) {
         // Setup physics world's contact delegate
         physicsWorld.contactDelegate = self
     }
@@ -62,9 +60,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didSimulatePhysics() {
         for (_, player) in allThemPlayers {
-            updatePlayerPosition(player)
+            updatePlayerPosition(player: player)
             if player.shouldDropBomb {
-                dropBombAtPosition(player.node.position)
+                dropBombAtPosition(position: player.node.position)
                 player.shouldDropBomb = false
             }
         }
@@ -75,21 +73,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let dy = player.vec.dy * playerSpeed
         
         if (abs(dx) + abs(dy) <= 0.0001) {
-            player.node.physicsBody!.resting = true
+            player.node.physicsBody!.isResting = true
             return
         }
         
-        let angle = atan2(dy, dx) + (CGFloat(M_PI) / 2)
-        let rotateAction = SKAction.rotateToAngle(angle, duration: 0)
+        let angle = atan2(dy, dx) + (CGFloat(Double.pi) / 2)
+        let rotateAction = SKAction.rotate(toAngle: angle, duration: 0)
         let newVelocity = CGVector(dx: dx, dy: dy)
         
-        player.node.runAction(rotateAction)
+        player.node.run(rotateAction)
         player.node.physicsBody!.velocity = newVelocity
     }
     
     func addPlayerWithId(id: String, face: String) {
         let player = RemotePlayer(id: id, face: face)
-        placePlayerNode(player.node)
+        placePlayerNode(node: player.node)
         allThemPlayers[id] = player
     }
     
@@ -110,18 +108,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func removePlayerWithId(id: String) {
         if let player = allThemPlayers[id] {
             player.node.removeFromParent()
-            allThemPlayers.removeValueForKey(id)
+            allThemPlayers.removeValue(forKey: id)
         }
     }
 
     func dropBombAtPosition(position: CGPoint) {
-        let bomb = SKSpriteNode.bomb(PlayerPointSize)
+        let bomb = SKSpriteNode.bomb(size: PlayerPointSize)
         bomb.position = position
         addChild(bomb)
         
-        runAction(SKAction.waitForDuration(2), completion: { [weak self] in
+        run(SKAction.wait(forDuration: 2), completion: { [weak self] in
             bomb.removeFromParent()
-            self!.addExplosionAtPosition(position)
+            self!.addExplosionAtPosition(position: position)
             })
     }
     
@@ -138,15 +136,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         node.name = "explosion"
         addChild(node)
         
-        runAction(SKAction.waitForDuration(2), completion: {
+        run(SKAction.wait(forDuration: 2), completion: {
             emitterNode.removeFromParent()
             node.removeFromParent()
         })
     }
     
     // MARK: - SKPhysicsContactDelegate
+
     
-    func didBeginContact(contact: SKPhysicsContact) {
+    func didBegin(_ contact: SKPhysicsContact) {
         // 1. Create local variables for two physics bodies
         var firstBody: SKPhysicsBody
         var secondBody: SKPhysicsBody
@@ -161,7 +160,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         if firstBody.node?.name == "player" && secondBody.node?.name == "explosion" {
-            killPlayer(firstBody.node!)
+            killPlayer(node: firstBody.node!)
         }
     }
     
@@ -173,19 +172,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         player.dead = true
         node.physicsBody!.collisionBitMask = 0
-        GameClient.sharedClient.sendPlayerDied(playerId)
-        let fadeoutAction = SKAction.fadeOutWithDuration(1)
-        let scaleAction = SKAction.scaleBy(10.0, duration: 1)
-        let rotateAction = SKAction.rotateByAngle(CGFloat(M_PI)*5, duration: 1)
+        GameClient.sharedClient.sendPlayerDied(id: playerId)
+        let fadeoutAction = SKAction.fadeOut(withDuration: 1)
+        let scaleAction = SKAction.scale(by: 10.0, duration: 1)
+        let rotateAction = SKAction.rotate(byAngle: CGFloat.pi*5, duration: 1)
         let group = SKAction.group([fadeoutAction, scaleAction, rotateAction])
         let removeAction = SKAction.removeFromParent()
-        node.runAction(SKAction.sequence([group, removeAction]))
+        node.run(SKAction.sequence([group, removeAction]))
     }
     
     func respawnPlayer(id: String) {
         let player = allThemPlayers[id]!
-        player.node = NewPlayerNode(player.id, text: player.face)
-        placePlayerNode(player.node)
+        player.node = NewPlayerNode(id: player.id, text: player.face)
+        placePlayerNode(node: player.node)
         player.dead = false
     }
     

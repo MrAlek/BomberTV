@@ -1,8 +1,13 @@
-source 'https://github.com/CocoaPods/Specs'
+# Uncomment the next line to define a global platform for your project
+platform :tvos, '9.0'
 
-inhibit_all_warnings!
-platform :tvos
-use_frameworks!
+target 'bomberTV' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+  
 
-pod 'SwiftyJSON'
-pod 'Starscream', :git => 'https://github.com/daltoniam/Starscream.git'
+  # Pods for bomberTV
+  pod 'SwiftyJSON'
+  pod 'Starscream'
+  
+end

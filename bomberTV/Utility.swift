@@ -13,8 +13,8 @@ extension UIView {
     
     func renderToImage() -> UIImage {
         UIGraphicsBeginImageContextWithOptions(bounds.size, false, 0.0)
-        layer.renderInContext(UIGraphicsGetCurrentContext()!)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
+        layer.render(in: UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         return image
     }
@@ -25,9 +25,9 @@ extension String {
     func renderWithSystemFontSize(systemFontSize: CGFloat) -> UIImage {
         let label = UILabel()
         label.text = self
-        label.font = UIFont.systemFontOfSize(systemFontSize)
-        label.frame = CGRect(x: 0, y: 0, width: label.intrinsicContentSize().width, height: label.intrinsicContentSize().height)
-        label.backgroundColor = UIColor.clearColor()
+        label.font = UIFont.systemFont(ofSize: systemFontSize)
+        label.frame = CGRect(x: 0, y: 0, width: label.intrinsicContentSize.width, height: label.intrinsicContentSize.height)
+        label.backgroundColor = UIColor.clear
         
         return label.renderToImage()
     }
@@ -36,7 +36,7 @@ extension String {
 extension SKSpriteNode {
     
     convenience init(text: String, size: CGFloat) {
-        self.init(texture: SKTexture(image: text.renderWithSystemFontSize(size)))
+        self.init(texture: SKTexture(image: text.renderWithSystemFontSize(systemFontSize: size)))
         self.size = texture!.size()
     }
 }
@@ -75,16 +75,7 @@ public extension CGPoint {
         return sqrt(x*x + y*y)
     }
     
-    public func normalized() -> CGPoint {
+    func normalized() -> CGPoint {
         return self / magnitude
     }
-}
-
-func delay(delay:Double, closure:()->()) {
-    dispatch_after(
-        dispatch_time(
-            DISPATCH_TIME_NOW,
-            Int64(delay * Double(NSEC_PER_SEC))
-        ),
-        dispatch_get_main_queue(), closure)
 }
