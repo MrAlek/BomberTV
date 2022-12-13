@@ -11,6 +11,7 @@
 		7467ED7B2947CD8C00B78AB3 /* Snow.sks in Resources */ = {isa = PBXBuildFile; fileRef = 7467ED7A2947CD8C00B78AB3 /* Snow.sks */; };
 		7467ED8029491AE600B78AB3 /* scream.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7467ED7E29491AE600B78AB3 /* scream.mp3 */; };
 		7467ED8129491AE600B78AB3 /* explosion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7467ED7F29491AE600B78AB3 /* explosion.mp3 */; };
+		7467ED8329491FCC00B78AB3 /* jinglebells.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7467ED8229491FCC00B78AB3 /* jinglebells.mp3 */; };
 		9337F0A51BE7DEAE000352B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9337F0A41BE7DEAE000352B3 /* AppDelegate.swift */; };
 		9337F0A71BE7DEAE000352B3 /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 9337F0A61BE7DEAE000352B3 /* art.scnassets */; };
 		9337F0A91BE7DEAE000352B3 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9337F0A81BE7DEAE000352B3 /* GameViewController.swift */; };
@@ -31,6 +32,7 @@
 		7467ED7A2947CD8C00B78AB3 /* Snow.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Snow.sks; sourceTree = "<group>"; };
 		7467ED7E29491AE600B78AB3 /* scream.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = scream.mp3; sourceTree = "<group>"; };
 		7467ED7F29491AE600B78AB3 /* explosion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = explosion.mp3; sourceTree = "<group>"; };
+		7467ED8229491FCC00B78AB3 /* jinglebells.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = jinglebells.mp3; sourceTree = "<group>"; };
 		9337F0A11BE7DEAE000352B3 /* bomberTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bomberTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9337F0A41BE7DEAE000352B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9337F0A61BE7DEAE000352B3 /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				9337F0AA1BE7DEAE000352B3 /* Main.storyboard */,
 				7467ED7F29491AE600B78AB3 /* explosion.mp3 */,
 				7467ED7E29491AE600B78AB3 /* scream.mp3 */,
+				7467ED8229491FCC00B78AB3 /* jinglebells.mp3 */,
 				9337F0AD1BE7DEAE000352B3 /* Assets.xcassets */,
 				9337F0AF1BE7DEAE000352B3 /* Info.plist */,
 			);
@@ -185,6 +188,7 @@
 				9337F0B81BE7E850000352B3 /* GameScene.sks in Resources */,
 				9337F0A71BE7DEAE000352B3 /* art.scnassets in Resources */,
 				9337F10A1BEA5FF6000352B3 /* Explosion.sks in Resources */,
+				7467ED8329491FCC00B78AB3 /* jinglebells.mp3 in Resources */,
 				7467ED8029491AE600B78AB3 /* scream.mp3 in Resources */,
 				7467ED8129491AE600B78AB3 /* explosion.mp3 in Resources */,
 				9337F0AE1BE7DEAE000352B3 /* Assets.xcassets in Resources */,

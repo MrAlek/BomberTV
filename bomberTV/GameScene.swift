@@ -65,6 +65,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         super.sceneDidLoad()
         
         addSnow()
+        self.addChild(SKAudioNode(#fileNamed: "jinglebells"))
     }
     
     // MARK - Updates
