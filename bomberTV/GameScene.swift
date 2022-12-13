@@ -18,12 +18,14 @@ class RemotePlayer {
     var node: SKNode
     var dead: Bool = false
     var shouldDropBomb: Bool = false
+    var score: Int
     
     init(id: String, face: String) {
         self.face = face
         self.id = id
         self.node = NewPlayerNode(id: id, text: face)
         self.vec = CGVector(dx: 0, dy: 0)
+        self.score = 0
     }
 }
 
@@ -40,6 +42,9 @@ func NewPlayerNode(id: String, text: String) -> SKNode {
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    let explosionSound = SKAction.playSoundFileNamed("explosion", waitForCompletion: false)
+    let screamSound = SKAction.playSoundFileNamed("scream", waitForCompletion: false)
+
     // MARK: - Instance Variables
     
     let playerSpeed: CGFloat = 300.0
@@ -68,7 +73,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for (_, player) in allThemPlayers {
             updatePlayerPosition(player: player)
             if player.shouldDropBomb {
-                dropBombAtPosition(position: player.node.position)
+                dropBomb(player: player)
                 player.shouldDropBomb = false
             }
         }
@@ -118,21 +123,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
 
-    func dropBombAtPosition(position: CGPoint) {
+    func dropBomb(player: RemotePlayer) {
+        let position = player.node.position
+        
         let bomb = SKSpriteNode.bomb(size: PlayerPointSize)
         bomb.position = position
         addChild(bomb)
         
         run(SKAction.wait(forDuration: 2), completion: { [weak self] in
             bomb.removeFromParent()
-            self!.addExplosionAtPosition(position: position)
+            self!.addExplosion(player: player, position: position)
             })
     }
     
-    func addExplosionAtPosition(position: CGPoint) {
+    func addExplosion(player: RemotePlayer, position: CGPoint) {
         let emitterNode = SKEmitterNode(fileNamed: "Explosion")!
         emitterNode.particlePosition = position
         addChild(emitterNode)
+        
+        run(explosionSound)
         
         let node = SKNode()
         node.physicsBody = SKPhysicsBody(circleOfRadius: 50)
@@ -140,6 +149,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         node.physicsBody!.categoryBitMask = 2
         node.physicsBody!.collisionBitMask = 0
         node.name = "explosion"
+        node.userData = ["playerId": player.id]
         addChild(node)
         
         run(SKAction.wait(forDuration: 2), completion: {
@@ -172,6 +182,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         if firstBody.node?.name == "player" && secondBody.node?.name == "explosion" {
+            let killerId = secondBody.node!.userData!["playerId"] as! String
+            allThemPlayers[killerId]?.score += 1
             killPlayer(node: firstBody.node!)
         }
     }
@@ -181,6 +193,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let player = allThemPlayers[playerId]!
         if player.dead { return }
+        
+        run(SKAction.wait(forDuration: 0.2), completion: { [weak self] in
+            self!.run(self!.screamSound)
+            })
         
         player.dead = true
         node.physicsBody!.collisionBitMask = 0

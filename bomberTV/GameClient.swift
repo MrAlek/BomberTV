@@ -48,6 +48,7 @@ class GameClient {
         var playerDidLeave: ((String) -> Void)? = nil
         var didUpdateMove: ((String, CGPoint) -> Void)? = nil
         var didDropBomb: ((String) -> Void)? = nil
+        var playerKilled: ((String) -> Void)? = nil
         var playerDidRespawn: ((String) -> Void)? = nil
     }
     var callbacks = Callbacks()
@@ -128,6 +129,7 @@ class GameClient {
     }
     
     func sendPlayerDied(id: String) {
+        callbacks.playerKilled?(id)
         let json: JSON = [
             "method": "die",
             "params": [

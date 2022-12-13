@@ -55,6 +55,10 @@ class GameViewController: UIViewController, UITableViewDataSource, UITableViewDe
             self?.scene.allThemPlayers[id]?.shouldDropBomb = true
         }
         
+        GameClient.sharedClient.callbacks.playerKilled = { [weak self] id in
+            self!.tableView.reloadData()
+        }
+        
         GameClient.sharedClient.callbacks.playerDidRespawn = { [weak self] id in
             self?.scene.respawnPlayer(id: id)
         }
@@ -63,10 +67,11 @@ class GameViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "lol") ?? UITableViewCell(style: .value2, reuseIdentifier: "lol")
         
+        let player = Array(scene.allThemPlayers.values)[indexPath.row]
         //cell.textLabel?.text = "Löl"
-        cell.textLabel?.text = Array(scene.allThemPlayers.values)[indexPath.row].face
+        cell.textLabel?.text = player.face
         //cell.textLabel?.font = UIFont(name: "System", size: 36)
-        //cell.detailTextLabel?.text = "4"
+        cell.detailTextLabel?.text = String(player.score)
         cell.detailTextLabel?.textColor = .black
         //cell.detailTextLabel?.font = UIFont(name: "System", size: 18)
         
