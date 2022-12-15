@@ -52,7 +52,7 @@ class GameClient {
         var playerDidRespawn: ((String) -> Void)? = nil
     }
     var callbacks = Callbacks()
-    let request = URLRequest(url: URL(string: "ws://192.168.0.64:4940/")!)
+    let request = URLRequest(url: URL(string: "ws://192.168.1.100:4940/")!)
     
     var socket: WebSocket;
     
