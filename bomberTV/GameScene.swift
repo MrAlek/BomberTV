@@ -198,7 +198,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let player = allThemPlayers[playerId]!
         if player.dead { return }
         
-        run(SKAction.wait(forDuration: 0.2), completion: { [weak self] in
+        run(SKAction.wait(forDuration: 0.5), completion: { [weak self] in
             self!.run(self!.screamSound)
             })
         
