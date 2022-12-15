@@ -214,7 +214,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func respawnPlayer(id: String) {
-        let player = allThemPlayers[id]!
+        guard let player = allThemPlayers[id] else { return }
         player.node = NewPlayerNode(id: player.id, text: player.face)
         placePlayerNode(node: player.node)
         player.dead = false
