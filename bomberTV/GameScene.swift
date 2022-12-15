@@ -9,7 +9,7 @@
 import SpriteKit
 
 let PlayerPointSize: CGFloat = 60.0
-let Padding: CGFloat = 128.0
+let Padding = CGSize(width: 288, height: 128.0)
 
 class RemotePlayer {
     var id: String
@@ -107,10 +107,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let corner = Int(arc4random_uniform(4))
         
         switch (corner) {
-        case 0: node.position = CGPoint(x: Padding, y: Padding)
-        case 1: node.position = CGPoint(x: size.width - Padding, y: Padding)
-        case 2: node.position = CGPoint(x: Padding, y: size.height - Padding)
-        case 3: node.position = CGPoint(x: size.width - Padding, y: size.height - Padding)
+        case 0: node.position = CGPoint(x: Padding.width, y: Padding.height)
+        case 1: node.position = CGPoint(x: size.width - Padding.width, y: Padding.height)
+        case 2: node.position = CGPoint(x: Padding.width, y: size.height - Padding.height)
+        case 3: node.position = CGPoint(x: size.width - Padding.width, y: size.height - Padding.height)
         default: fatalError()
         }
         
@@ -184,7 +184,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if firstBody.node?.name == "player" && secondBody.node?.name == "explosion" {
             let killerId = secondBody.node!.userData!["playerId"] as! String
-            allThemPlayers[killerId]?.score += 1
+            if (killerId != firstBody.node!.userData!["id"] as! String) { // Suicide don't get scores heh
+                allThemPlayers[killerId]?.score += 1
+            }
+            
             killPlayer(node: firstBody.node!)
         }
     }
