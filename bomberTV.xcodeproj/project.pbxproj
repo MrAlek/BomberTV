@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4CC083582DECB68B0DF64B2B /* Pods_bomberTV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA63F191A2F4450E885CEAB /* Pods_bomberTV.framework */; };
+		7443DA99294B94B400C258E8 /* explosion-lower.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7443DA98294B94B400C258E8 /* explosion-lower.mp3 */; };
 		7467ED7B2947CD8C00B78AB3 /* Snow.sks in Resources */ = {isa = PBXBuildFile; fileRef = 7467ED7A2947CD8C00B78AB3 /* Snow.sks */; };
 		7467ED8029491AE600B78AB3 /* scream.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7467ED7E29491AE600B78AB3 /* scream.mp3 */; };
 		7467ED8129491AE600B78AB3 /* explosion.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7467ED7F29491AE600B78AB3 /* explosion.mp3 */; };
@@ -29,6 +30,7 @@
 
 /* Begin PBXFileReference section */
 		4CA63F191A2F4450E885CEAB /* Pods_bomberTV.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_bomberTV.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7443DA98294B94B400C258E8 /* explosion-lower.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "explosion-lower.mp3"; sourceTree = "<group>"; };
 		7467ED7A2947CD8C00B78AB3 /* Snow.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Snow.sks; sourceTree = "<group>"; };
 		7467ED7E29491AE600B78AB3 /* scream.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = scream.mp3; sourceTree = "<group>"; };
 		7467ED7F29491AE600B78AB3 /* explosion.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = explosion.mp3; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				9337F0B51BE7E75A000352B3 /* GameScene.swift */,
 				9337F0AA1BE7DEAE000352B3 /* Main.storyboard */,
 				7467ED7F29491AE600B78AB3 /* explosion.mp3 */,
+				7443DA98294B94B400C258E8 /* explosion-lower.mp3 */,
 				7467ED7E29491AE600B78AB3 /* scream.mp3 */,
 				7467ED8229491FCC00B78AB3 /* jinglebells.mp3 */,
 				9337F0AD1BE7DEAE000352B3 /* Assets.xcassets */,
@@ -185,6 +188,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7443DA99294B94B400C258E8 /* explosion-lower.mp3 in Resources */,
 				9337F0B81BE7E850000352B3 /* GameScene.sks in Resources */,
 				9337F0A71BE7DEAE000352B3 /* art.scnassets in Resources */,
 				9337F10A1BEA5FF6000352B3 /* Explosion.sks in Resources */,

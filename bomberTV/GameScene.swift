@@ -42,7 +42,7 @@ func NewPlayerNode(id: String, text: String) -> SKNode {
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
-    let explosionSound = SKAction.playSoundFileNamed("explosion", waitForCompletion: false)
+    let explosionSound = SKAction.playSoundFileNamed("explosion-lower", waitForCompletion: false)
     let screamSound = SKAction.playSoundFileNamed("scream", waitForCompletion: false)
 
     // MARK: - Instance Variables
