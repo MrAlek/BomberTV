@@ -56,11 +56,48 @@ class GameViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         
         GameClient.sharedClient.callbacks.playerKilled = { [weak self] id in
+            let playersSortedByScore = self!.scene.allThemPlayers.values.sorted { l, r in
+                l.score > r.score
+            }
+            
+            if let player = playersSortedByScore.first, player.score >= 20 {
+                let alert = UIAlertController(title: "We have a winner!", message: "Congratulations \(player.face). You are the fiercest warrior at Done. Redeem your price under the Marshall 👨‍✈️.", preferredStyle: .alert)
+                let firstAction = UIAlertAction(title: "🥇", style: .default) { [weak self] _ in
+                    
+                    let message = """
+                    Oh I haven't felt this way in years! Watching you fight so fiercly in battle has made me convinced. You can take down the 👹, and I will help you. Here is a clue:
+                    
+                    A place to keep your ride safe and sound,
+                    Where wind and cold can't be found.
+                    A place to store your two-wheeled friend,
+                    Where you can make sure it won't bend.
+
+                    A place to keep your ride secure,
+                    Where you can be sure
+                    That there will be no sabotage
+                    In fact it is a _____________
+                    """
+                    
+                    let alert = UIAlertController(title: "Such bravery, such action!", message: message, preferredStyle: .alert)
+                    let action = UIAlertAction(title: "Go get 'em!", style: .default)
+                    alert.addAction(action)
+                    self!.present(alert, animated: true)
+                }
+                alert.addAction(firstAction)
+                self!.present(alert, animated: true)
+            }
             self!.tableView.reloadData()
         }
         
         GameClient.sharedClient.callbacks.playerDidRespawn = { [weak self] id in
             self?.scene.respawnPlayer(id: id)
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+            let alert = UIAlertController(title: "First one to 20 wins!", message: nil, preferredStyle: .alert)
+            let action = UIAlertAction(title: "En garde!", style: .default)
+            alert.addAction(action)
+            self!.present(alert, animated: true)
         }
     }
     
@@ -68,20 +105,15 @@ class GameViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let cell = tableView.dequeueReusableCell(withIdentifier: "lol") ?? UITableViewCell(style: .value2, reuseIdentifier: "lol")
         
         let player = Array(scene.allThemPlayers.values)[indexPath.row]
-        //cell.textLabel?.text = "Löl"
         cell.textLabel?.text = player.face
-        //cell.textLabel?.font = UIFont(name: "System", size: 36)
         cell.detailTextLabel?.text = String(player.score)
         cell.detailTextLabel?.textColor = .black
-        //cell.detailTextLabel?.font = UIFont(name: "System", size: 18)
-        
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return scene.allThemPlayers.count
-        //return 10
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
