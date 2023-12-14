@@ -1,11 +1,3 @@
-//
-//  GameScene.swift
-//  Fear The Dead
-//
-//  Created by Morten Faarkrog on 08/09/15.
-//  Copyright (c) 2015 Razeware. All rights reserved.
-//
-
 import SpriteKit
 
 let PlayerPointSize: CGFloat = 60.0
@@ -42,6 +34,19 @@ func NewPlayerNode(id: String, text: String) -> SKNode {
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    class func newGameScene() -> GameScene {
+        // Load 'GameScene.sks' as an SKScene.
+        guard let scene = SKScene(fileNamed: "GameScene") as? GameScene else {
+            print("Failed to load GameScene.sks")
+            abort()
+        }
+        
+        // Set the scale mode to scale to fit the window
+        scene.scaleMode = .aspectFill
+        
+        return scene
+    }
+    
     let explosionSound = SKAction.playSoundFileNamed("explosion-lower", waitForCompletion: false)
     let screamSound = SKAction.playSoundFileNamed("scream", waitForCompletion: false)
 
@@ -71,6 +76,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // MARK - Updates
     
     override func didSimulatePhysics() {
+        
         for (_, player) in allThemPlayers {
             updatePlayerPosition(player: player)
             if player.shouldDropBomb {
@@ -81,6 +87,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func updatePlayerPosition(player: RemotePlayer) {
+        
         let dx = player.vec.dx * playerSpeed
         let dy = player.vec.dy * playerSpeed
         
@@ -88,13 +95,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             player.node.physicsBody!.isResting = true
             return
         }
-        
-        let angle = atan2(dy, dx) + (CGFloat(Double.pi) / 2)
-        let rotateAction = SKAction.rotate(toAngle: angle, duration: 0)
-        let newVelocity = CGVector(dx: dx, dy: dy)
-        
-        player.node.run(rotateAction)
-        player.node.physicsBody!.velocity = newVelocity
+
+        player.node.zRotation = atan2(dy, dx) + (CGFloat(Double.pi) / 2)
+        player.node.physicsBody!.velocity = CGVector(dx: dx, dy: dy)
     }
     
     func addPlayerWithId(id: String, face: String) {
@@ -183,10 +186,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         if firstBody.node?.name == "player" && secondBody.node?.name == "explosion" {
+            // Add score to killers scorecard
             let killerId = secondBody.node!.userData!["playerId"] as! String
             if (killerId != firstBody.node!.userData!["id"] as! String) { // Suicide don't get scores heh
                 allThemPlayers[killerId]?.score += 1
             }
+
             
             killPlayer(node: firstBody.node!)
         }
@@ -198,7 +203,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let player = allThemPlayers[playerId]!
         if player.dead { return }
         
-        run(SKAction.wait(forDuration: 0.5), completion: { [weak self] in
+        player.score -= 1
+
+        
+       run(SKAction.wait(forDuration: 0.5), completion: { [weak self] in
             self!.run(self!.screamSound)
             })
         

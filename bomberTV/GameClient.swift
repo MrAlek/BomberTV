@@ -41,6 +41,14 @@ extension CGPoint: JSONParsable {
     }
 }
 
+let formatter = DateFormatter()
+
+public func timestamp() -> String {
+    let now = Date()
+    formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+    return formatter.string(from: now)
+}
+
 
 class GameClient {
     struct Callbacks {
@@ -52,7 +60,7 @@ class GameClient {
         var playerDidRespawn: ((String) -> Void)? = nil
     }
     var callbacks = Callbacks()
-    let request = URLRequest(url: URL(string: "ws://192.168.1.100:4940/")!)
+    let request = URLRequest(url: URL(string: "ws://192.168.0.11:4940/")!)
     
     var socket: WebSocket;
     
@@ -89,7 +97,6 @@ class GameClient {
     }
     
     func handleJSON(json: JSON) {
-        //print("Received json: \(json)")
         
         guard let message = try? Message(json) else {
             print("Got JSON which isn't a message!"); return

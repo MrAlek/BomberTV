@@ -1,9 +1,9 @@
 PODS:
-  - Starscream (4.0.4)
+  - Starscream (4.0.6)
   - SwiftyJSON (5.0.1)
 
 DEPENDENCIES:
-  - Starscream
+  - Starscream (~> 4.0.6)
   - SwiftyJSON
 
 SPEC REPOS:
@@ -12,9 +12,9 @@ SPEC REPOS:
     - SwiftyJSON
 
 SPEC CHECKSUMS:
-  Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
+  Starscream: fb2c4510bebf908c62bd383bcf05e673720e91fd
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
 
-PODFILE CHECKSUM: 9b5eaed0a183e953526437397b92b791c69f3888
+PODFILE CHECKSUM: 17cfe4f643eb2367c9b624dc62d39673cbc9000b
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.14.2

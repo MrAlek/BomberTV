@@ -16,25 +16,13 @@ class GameViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var gameView: SKView!
     
-    lazy var scene: GameScene = {
-        // Load 'GameScene.sks' as an SKScene.
-        guard let scene = SKScene(fileNamed: "GameScene") as? GameScene else {
-            print("Failed to load GameScene.sks")
-            abort()
-        }
-        
-        // Set the scale mode to scale to fit the window
-        scene.scaleMode = .aspectFill
-        
-        return scene
-    }()
+    lazy var scene: GameScene = GameScene.newGameScene()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        /* Sprite Kit applies additional optimizations to improve rendering performance */
-        gameView.ignoresSiblingOrder = true
         gameView.presentScene(scene)
+        gameView.ignoresSiblingOrder = true
 
         GameClient.sharedClient.callbacks.playerDidJoin = { [weak self] (id, face) in
             self!.scene.addPlayerWithId(id: id, face: face)
@@ -56,9 +44,11 @@ class GameViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         
         GameClient.sharedClient.callbacks.playerKilled = { [weak self] id in
+            /*
             let playersSortedByScore = self!.scene.allThemPlayers.values.sorted { l, r in
                 l.score > r.score
             }
+            
             
             if let player = playersSortedByScore.first, player.score >= 20 {
                 let alert = UIAlertController(title: "We have a winner!", message: "Congratulations \(player.face). You are the fiercest warrior at Done. Redeem your price under the Marshall 👨‍✈️.", preferredStyle: .alert)
@@ -85,7 +75,7 @@ class GameViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 }
                 alert.addAction(firstAction)
                 self!.present(alert, animated: true)
-            }
+            }*/
             self!.tableView.reloadData()
         }
         
